@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1757272652 source:c:\users\usuario\desktop\universidad\a3 - 2c\eda\tpm1\tpmeda\main.c
+	<stdio.h>
+	<stdlib.h>
+	"operaciones.h"
+
+1757273026 c:\users\usuario\desktop\universidad\a3 - 2c\eda\tpm1\tpmeda\operaciones.h
+	<string.h>
+
