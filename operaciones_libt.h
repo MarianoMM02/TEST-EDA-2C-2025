@@ -23,43 +23,25 @@ void init_LIBT(LIBT *libt) {
 }
 
 int Localizar_LIBT(LIBT libt, char *codigo, int *pos, float *costo) {
-    //l�mites inclusivos y segmento m�s grande a la derecha
-    //a costo se le suma 1 por cada comparaci�n de clave en la trisecci�n en el arreglo de punteros
-
     int li = 0, ls = libt.ultimo_p - 1;
     *costo = 0;
 
     while (li <= ls) {
-        int tercio = (ls - li + 1) / 3;
-        int medio1 = li + tercio;
-        int medio2 = ls - tercio;
+        int medio = (li + ls + 1) / 2; // segmento más grande a la izquierda
+        (*costo)++;
+        int comp = strcmp(libt.punteros[medio]->codigo, codigo);
 
-        *costo = *costo + 1; //primera comparación (medio1)
-        int comp1 = stricmp(codigo, libt.punteros[medio1]->codigo);
-
-        if (comp1 < 0) { // El código está en el primer tercio.
-            ls = medio1 - 1;
-        } else if (comp1 == 0) { // Encontrado en medio1.
-            *pos = medio1;
-            return 1;
-        } else { //el código es mayor que el de medio1.
-            *costo = *costo + 1; // segunda comparación (medio2)
-            int comp2 = stricmp(codigo, libt.punteros[medio2]->codigo);
-
-            if (comp2 < 0) { // el cód está en el segundo tercio.
-                li = medio1 + 1;
-                ls = medio2 - 1;
-            } else if (comp2 == 0) { //encontrado en medio2.
-                *pos = medio2;
-                return 1;
-            } else { //cóf está en el tercer tercio.
-                li = medio2 + 1;
-            }
+        if (comp == 0) {
+            *pos = medio;
+            return 1; // Encontrado
+        } else if (comp < 0) {
+            li = medio + 1;
+        } else {
+            ls = medio - 1;
         }
     }
-
-    *pos = li; // posición de inserción si no se encontró.
-    return 0;
+    *pos = li + 1; // Posición donde debería insertarse
+    return 0; // No encontrado
 }
 
 int Alta_LIBT(LIBT *libt, Alumno alumno, float *costo) {
@@ -77,7 +59,7 @@ int Alta_LIBT(LIBT *libt, Alumno alumno, float *costo) {
     } else {
         //Se guarda al final, sin orden específico.
         libt->alumnos[libt->ultimo_d] = alumno;
-        
+
         //Corrimiento de punteros para hacer espacio
         int i;
         for (i = libt->ultimo_p; i > pos; i--) {
@@ -123,11 +105,11 @@ int Baja_LIBT(LIBT *libt, Alumno alumno, float *costo) {
                 *costo = *costo + 0.5; // Cada corrimiento de puntero suma 0.5 al costo.
             }
 
-            libt->ultimo_p--; // Se reduce el contador de punteros.
+            libt->ultimo_p--; // Se reduce el contador de puntero   s.
             return 1; // Éxito
         }
     }
-    return 0; //fracado 
+    return 0; //fracado
 }
 
 
