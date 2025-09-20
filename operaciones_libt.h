@@ -40,7 +40,7 @@ int Localizar_LIBT(LIBT libt, char *codigo, int *pos, float *costo) {
             ls = medio - 1;
         }
     }
-    *pos = li + 1; // Posición donde debería insertarse
+    *pos = li; // Posición donde debería insertarse
     return 0; // No encontrado
 }
 
@@ -96,7 +96,8 @@ int Baja_LIBT(LIBT *libt, Alumno alumno, float *costo) {
         //se comparan los datos del alumno apuntado con los datos recibi
         if (strcmp(libt->punteros[pos]->nombape, alumno.nombape) == 0 &&
             strcmp(libt->punteros[pos]->correo, alumno.correo) == 0 &&
-            libt->punteros[pos]->nota == alumno.nota) {
+            libt->punteros[pos]->nota == alumno.nota &&
+            strcmp(libt->punteros[pos]->condfinal, alumno.condfinal) == 0) {
 
             //Eliminación del puntero y corrimiento
             int i;
